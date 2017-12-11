@@ -1,0 +1,8 @@
+.env
+/public/bundles/
+/var/
+/vendor/
+/.idea/*
+
+composer.phar
+composer.lock
