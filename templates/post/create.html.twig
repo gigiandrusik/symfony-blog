@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create post{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Create post</h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                {% embed "post/_form.html.twig" %}{% endembed %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

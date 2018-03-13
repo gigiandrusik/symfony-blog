@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('post.create') }}" class="btn btn-success">
+        Create
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+            <tr class="headings">
+                <th class="column-title">
+                    Name
+                </th>
+                <th class="column-title">
+                    Content
+                </th>
+                <th class="column-title">
+                    File
+                </th>
+                <th class="column-title no-link last">
+                    <span class="nobr">
+                        Actions
+                    </span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for post in posts %}
+
+                <tr class="pointer">
+                    <td>
+                        {{ post.name }}
+                    </td>
+                    <td>
+                        {{ post.content }}
+                    </td>
+                    <td>
+                        {{ post.file }}
+                    </td>
+                    <td class="last">
+                        <a href="{{ path('category.edit', {'id': category.id}) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="{{ path('category.delete', {'id': category.id}) }}"
+                           class="delete-item"
+                           data-confirm="Are you sure want to delete this post?"
+                        >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

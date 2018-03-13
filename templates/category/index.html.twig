@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('category.create') }}" class="btn btn-success">
+        Create
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+            <tr class="headings">
+                <th class="column-title">
+                    Name
+                </th>
+                <th class="column-title">
+                    Description
+                </th>
+                <th class="column-title no-link last">
+                    <span class="nobr">
+                        Actions
+                    </span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for category in categories %}
+
+                <tr class="pointer">
+                    <td>
+                        {{ category.name }}
+                    </td>
+                    <td>
+                        {{ category.description }}
+                    </td>
+                    <td class="last">
+                        <a href="{{ path('category.show', {'id': category.id}) }}">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a href="{{ path('category.edit', {'id': category.id}) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="{{ path('category.delete', {'id': category.id}) }}"
+                           class="delete-item"
+                           data-confirm="Are you sure want to delete this category?"
+                        >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
