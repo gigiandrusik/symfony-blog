@@ -11,8 +11,7 @@
     <title>{% block title %}Blog{% endblock %}</title>
 
     {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/app.css') }}" rel="stylesheet">
     {% endblock %}
 
 </head>
@@ -29,8 +28,7 @@
 </div>
 
 {% block javascripts %}
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
 {% endblock %}
 
 </body>
