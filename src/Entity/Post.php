@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -10,9 +13,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity()
  * @ORM\Table(name="post")
  * @UniqueEntity("name")
+ * @Vich\Uploadable
  */
 class Post
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,26 +28,36 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     *
      * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     *
      * @Assert\NotBlank()
      */
     private $content;
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Assert\Image(maxSize="2M")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $file;
 
     /**
+     * @var File
+     *
+     * @Assert\File(maxSize="2M")
+     *
+     * @Vich\UploadableField(mapping="post_files", fileNameProperty="file")
+     */
+    private $attachmentFile;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
+     *
      * @Assert\NotBlank()
      */
     private $category;
@@ -100,6 +116,26 @@ class Post
     public function setFile($file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * @param File|null $file
+     */
+    public function setAttachmentFile(File $file = null)
+    {
+        $this->attachmentFile = $file;
+
+        if ($file instanceof File) {
+            $this->setUpdatedAt(new \DateTime('now'));
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getAttachmentFile()
+    {
+        return $this->attachmentFile;
     }
 
     /**

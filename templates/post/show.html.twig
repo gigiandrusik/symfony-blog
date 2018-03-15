@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post {{ post.name }}{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('posts') }}" class="btn btn-info">
+        Posts
+    </a>
+
+    <hr/>
+
+    <div class="table-responsive">
+        <table class="table table-striped jambo_table bulk_action">
+            <tbody>
+                <tr class="pointer">
+                    <td>
+                        Category
+                    </td>
+                    <td>
+                        {{ post.category.name }}
+                    </td>
+                </tr>
+                <tr class="pointer">
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        {{ post.name }}
+                    </td>
+                </tr>
+                <tr class="pointer">
+                    <td>
+                        Content
+                    </td>
+                    <td>
+                        {{ post.content }}
+                    </td>
+                </tr>
+                {% if post.file %}
+                    <tr class="pointer">
+                        <td>
+                            File
+                        </td>
+                        <td>
+                            <image src="{{ asset('uploads/images/' ~ post.file) }}" class="img-thumbnail" width="200px" height="200px" />
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr/>
+
+{% endblock %}

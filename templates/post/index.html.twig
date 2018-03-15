@@ -13,6 +13,9 @@
             <thead>
             <tr class="headings">
                 <th class="column-title">
+                    Category
+                </th>
+                <th class="column-title">
                     Name
                 </th>
                 <th class="column-title">
@@ -34,19 +37,27 @@
 
                 <tr class="pointer">
                     <td>
+                        {{ post.category.name }}
+                    </td>
+                    <td>
                         {{ post.name }}
                     </td>
                     <td>
                         {{ post.content }}
                     </td>
                     <td>
-                        {{ post.file }}
+                        {% if post.file %}
+                            <image src="{{ asset('uploads/images/' ~ post.file) }}" class="img-thumbnail" width="200px" height="200px" />
+                        {% endif %}
                     </td>
                     <td class="last">
-                        <a href="{{ path('category.edit', {'id': category.id}) }}">
+                        <a href="{{ path('post.show', {'id': post.id}) }}">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a href="{{ path('post.edit', {'id': post.id}) }}">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
-                        <a href="{{ path('category.delete', {'id': category.id}) }}"
+                        <a href="{{ path('post.delete', {'id': post.id}) }}"
                            class="delete-item"
                            data-confirm="Are you sure want to delete this post?"
                         >

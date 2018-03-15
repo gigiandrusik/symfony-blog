@@ -6,11 +6,12 @@ use App\Entity\Post;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\{
-    TextType, TextareaType, FileType
+    TextType, TextareaType
 };
 
 /**
@@ -76,12 +77,13 @@ class PostType extends AbstractType
                     ]
                 ]
             )->add(
-                'file',
-                FileType::class,
+                'attachmentFile',
+                VichFileType::class,
                 [
-                    'required'   => true,
-                    'label'      => 'File*',
-                    'label_attr' => [
+                    'required'     => false,
+                    'allow_delete' => true,
+                    'label'        => 'File*',
+                    'label_attr'   => [
                         'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
                     ],
                 ]
