@@ -39,11 +39,17 @@ class Category
     private $posts;
 
     /**
-     * Country constructor.
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="category")
+     */
+    private $comments;
+
+    /**
+     * Category constructor.
      */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -92,5 +98,13 @@ class Category
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return ArrayCollection|Comment[]
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

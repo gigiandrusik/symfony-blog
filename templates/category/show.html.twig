@@ -44,17 +44,17 @@
             <div class="table-responsive">
                 <table class="table table-striped jambo_table bulk_action">
                     <thead>
-                    <tr class="headings">
-                        <th class="column-title">
-                            Name
-                        </th>
-                        <th class="column-title">
-                            Content
-                        </th>
-                        <th class="column-title">
-                            File
-                        </th>
-                    </tr>
+                        <tr class="headings">
+                            <th class="column-title">
+                                Name
+                            </th>
+                            <th class="column-title">
+                                Content
+                            </th>
+                            <th class="column-title">
+                                File
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
 
@@ -71,6 +71,52 @@
                                 {% if post.file %}
                                     <image src="{{ asset('uploads/images/' ~ post.file) }}" class="img-thumbnail" width="200px" height="200px" />
                                 {% endif %}
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    {% endif %}
+
+    {% if category.comments|length > 0 %}
+
+        <div class="col-md-6">
+
+            <h3>Comments</h3>
+
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">
+                                Author
+                            </th>
+                            <th class="column-title">
+                                Content
+                            </th>
+                            <th class="column-title">
+                                Created
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for comment in category.comments %}
+
+                        <tr class="pointer">
+                            <td>
+                                {{ comment.author }}
+                            </td>
+                            <td>
+                                {{ comment.content }}
+                            </td>
+                            <td>
+                                {{ comment.createdAt|date() }}
                             </td>
                         </tr>
 
