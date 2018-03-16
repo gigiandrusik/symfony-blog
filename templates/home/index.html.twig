@@ -4,6 +4,127 @@
 
 {% block body %}
 
-    hello
+    {% for category in categories %}
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ category.name }}</h3>
+            </div>
+            <div class="panel-body">
+
+                {{ category.description }}
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ category.name }} comments</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <ul class="list-group">
+                            {% for comment in category.comments %}
+                                <li class="list-group-item">{{ comment.author }} at {{ comment.createdAt|date('d-m-Y H:i:s') }} : {{ comment.content }} </li>
+                            {% endfor %}
+                        </ul>
+
+                        <form action="{{ path('category.comment', {'id': category.id}) }}" method="post" class="ajax-form">
+
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+
+                                    <strong>Author:</strong>
+
+                                    <input type="text" name="author" class="form-control" placeholder="Name Surname" pattern="^[A-ZА-ЯЁ][a-zа-яё]+\s[A-ZА-ЯЁ][a-zа-яё]+$" required>
+
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+
+                                    <strong>Content:</strong>
+
+                                    <textarea name="content" class="form-control" placeholder="Content" required></textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <button type="submit" class="btn btn-primary">Comment</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                {% if category.posts %}
+
+                    {% for post in category.posts %}
+
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ post.name }}</h3>
+                            </div>
+                            <div class="panel-body">
+
+                                {% if post.file %}
+                                    <image src="{{ asset('uploads/images/' ~ post.file) }}" class="img-thumbnail" width="200px" height="200px" />
+                                {% endif %}
+
+                                {{ post.content }}
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{ post.name }} comments</h3>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <ul class="list-group">
+                                            {% for comment in post.comments %}
+                                                <li class="list-group-item">{{ comment.author }} at {{ comment.createdAt|date('d-m-Y H:i:s') }}: {{ comment.content }} </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                        <form action="{{ path('post.comment', {'id': post.id}) }}" method="post" class="ajax-form">
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+
+                                                    <strong>Author:</strong>
+
+                                                    <input type="text" name="author" class="form-control" placeholder="Name Surname" pattern="^[A-ZА-ЯЁ][a-zа-яё]+\s[A-ZА-ЯЁ][a-zа-яё]+$" required>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+
+                                                    <strong>Content:</strong>
+
+                                                    <textarea name="content" class="form-control" placeholder="Content" required></textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <button type="submit" class="btn btn-primary">Comment</button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    {% endfor %}
 
 {% endblock %}

@@ -6,6 +6,7 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/modal.js';
 
 //custom js
 require('./delete-item.js');
+require('./ajax-form.js');
 
 //css
 require('../css/app.scss');

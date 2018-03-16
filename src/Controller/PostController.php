@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Entity\Comment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class PostController
@@ -124,5 +127,38 @@ class PostController extends Controller
         $this->addFlash('info', 'The post deleted successfully.');
 
         return $this->redirectToRoute('posts');
+    }
+
+    /**
+     * @Route("/post/{id}/comment", name="post.comment")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @param Post $post
+     *
+     * @return JsonResponse
+     */
+    public function comment(Request $request, Post $post)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Bad Request');
+        }
+
+        $comment = new Comment();
+
+        $comment->setPost($post);
+        $comment->setAuthor($request->get('author'));
+        $comment->setContent($request->get('content'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($comment);
+        $em->flush();
+
+        return new JsonResponse([
+            'author'  => $comment->getAuthor(),
+            'content' => $comment->getContent(),
+            'created' => $comment->getCreatedAt()->format('d-m-Y H:i:s'),
+        ]);
     }
 }

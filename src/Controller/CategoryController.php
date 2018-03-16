@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Form\CategoryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class CategoryController
@@ -124,5 +127,38 @@ class CategoryController extends Controller
         $this->addFlash('info', 'The category deleted successfully.');
 
         return $this->redirectToRoute('categories');
+    }
+
+    /**
+     * @Route("/category/{id}/comment", name="category.comment")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @param Category $category
+     *
+     * @return JsonResponse
+     */
+    public function comment(Request $request, Category $category)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Bad Request');
+        }
+
+        $comment = new Comment();
+
+        $comment->setCategory($category);
+        $comment->setAuthor($request->get('author'));
+        $comment->setContent($request->get('content'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($comment);
+        $em->flush();
+
+        return new JsonResponse([
+            'author'  => $comment->getAuthor(),
+            'content' => $comment->getContent(),
+            'created' => $comment->getCreatedAt()->format('d-m-Y H:i:s'),
+        ]);
     }
 }

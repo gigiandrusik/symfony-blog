@@ -64,7 +64,7 @@ class Post
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     private $comments;
 
