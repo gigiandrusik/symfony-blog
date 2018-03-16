@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Simple Blog{% endblock %}
+
+{% block body %}
+
+    <ul class="list-group">
+        {% for agent, total in info %}
+            <li class="list-group-item">{{ agent }}: <b>{{ total }}</b></li>
+        {% endfor %}
+    </ul>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>User Agent</th>
+
+            <th>IP</th>
+        </tr>
+
+        {% for statistic in statistics %}
+            <tr>
+                <td>
+                {{ statistic.userAgent }}
+                </td>
+                <td>
+                    {{ statistic.ip }}
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
